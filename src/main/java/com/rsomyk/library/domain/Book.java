@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "books")
-public class Books {
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "book_id")
@@ -25,12 +25,12 @@ public class Books {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "author_id"))
-    private List<Authors> bookAuthor = new ArrayList<>();
+    private List<Author> bookAuthor = new ArrayList<>();
 
-    public Books() {
+    public Book() {
     }
 
-    public Books(String bookName, String genre, List<Authors> bookAuthor) {
+    public Book(String bookName, String genre, List<Author> bookAuthor) {
         this.bookName = bookName;
         this.genre = genre;
         this.bookAuthor = bookAuthor;
@@ -56,11 +56,11 @@ public class Books {
         this.genre = genre;
     }
 
-    public List<Authors> getBooksAutors() {
+    public List<Author> getBooksAutors() {
         return bookAuthor;
     }
 
-    public void setBooksAutors(List<Authors> booksAuthors) {
+    public void setBooksAutors(List<Author> booksAuthors) {
         this.bookAuthor = booksAuthors;
     }
 
@@ -68,11 +68,11 @@ public class Books {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Books books = (Books) o;
-        return Objects.equals(id, books.id) &&
-                Objects.equals(bookName, books.bookName) &&
-                Objects.equals(genre, books.genre) &&
-                Objects.equals(bookAuthor, books.bookAuthor);
+        Book book = (Book) o;
+        return Objects.equals(id, book.id) &&
+                Objects.equals(bookName, book.bookName) &&
+                Objects.equals(genre, book.genre) &&
+                Objects.equals(bookAuthor, book.bookAuthor);
     }
 
     @Override

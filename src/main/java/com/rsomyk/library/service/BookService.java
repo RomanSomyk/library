@@ -1,24 +1,24 @@
 package com.rsomyk.library.service;
 
-import com.rsomyk.library.domain.Authors;
-import com.rsomyk.library.domain.Books;
+import com.rsomyk.library.domain.Author;
+import com.rsomyk.library.domain.Book;
 
 import java.util.List;
 
 public interface BookService {
 
-    Books getBookById(Long bookId);
+    Book getBookById(Long bookId);
 
-    Books getBookByAuthorName(String authorName);
+    Book getBookByAuthorName(String authorName);
 
-    List<Books> getAllBooks();
+    List<Book> getAllBooks();
 
-    List<Books> getAllBooksOfAuthor(Long authorId);
+    List<Book> getAllBooksOfAuthor(Long authorId);
 
-    void addBook(String bookName, String genre, List<Authors>bookAuthor);
+    void addBook(String bookName, String genre, List<Author>bookAuthor);
 
     void deleteBook(Long bookId);
 
-    Books updateBook(Long bookId, String bookName, String genre, List<Authors> bookAuthor);
+    Book updateBook(Long bookId, String bookName, String genre, List<Author> bookAuthor);
 
 }

@@ -1,20 +1,20 @@
 package com.rsomyk.library.service;
 
-import com.rsomyk.library.domain.Authors;
+import com.rsomyk.library.domain.Author;
 
 import java.util.List;
 
 public interface AuthorsService {
-    Authors getAuthorById(Long authorId);
+    Author getAuthorById(Long authorId);
 
-    Authors getAuthorByBookName(String bookName);
+    Author getAuthorByBookName(String bookName);
 
-    List<Authors> getAllAuthors();
+    List<Author> getAllAuthors();
 
     void addAuthor(String authorName);
 
     void deleteAuthor(Long authorId);
 
-    Authors updateAuthor(Long authorId, String authorName);
+    Author updateAuthor(Long authorId, String authorName);
 
 }

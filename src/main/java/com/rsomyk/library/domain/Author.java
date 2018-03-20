@@ -6,42 +6,42 @@ import java.util.Set;
 
 @Entity
 @Table(name = "authors")
-public class Authors {
+public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "author_id")
     private Long id;
 
     @Column(name = "author_name")
-    private String authorName;
+    private String fullName;
 
     @ManyToMany(mappedBy = "bookAuthor")
-    private Set<Books> books;
+    private Set<Book> books;
 
-    public Authors() {
+    public Author() {
     }
 
-    public Authors(String authorName) {
-        this.authorName = authorName;
+    public Author(String fullName) {
+        this.fullName = fullName;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public Set<Books> getBooks() {
+    public Set<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(Set<Books> books) {
+    public void setBooks(Set<Book> books) {
         this.books = books;
     }
 
@@ -49,14 +49,14 @@ public class Authors {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Authors authors = (Authors) o;
-        return Objects.equals(id, authors.id) &&
-                Objects.equals(authorName, authors.authorName) &&
-                Objects.equals(books, authors.books);
+        Author author = (Author) o;
+        return Objects.equals(id, author.id) &&
+                Objects.equals(fullName, author.fullName) &&
+                Objects.equals(books, author.books);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, authorName, books);
+        return Objects.hash(id, fullName, books);
     }
 }
