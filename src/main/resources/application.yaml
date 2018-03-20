@@ -12,7 +12,7 @@ spring:
 logging:
   file: library.log
   level:
-    com.softserve.academy.spaced.repetition: INFO
+    com.rsomyk.library: INFO
     org.springframework: ERROR
     org.hibernate: ERROR
     springfox.documentation: ERROR
