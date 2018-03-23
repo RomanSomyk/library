@@ -1,8 +1,12 @@
 package com.rsomyk.library.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "authors")
@@ -13,10 +17,12 @@ public class Author {
     private Long id;
 
     @Column(name = "author_name")
+    @NotNull
     private String fullName;
 
-    @ManyToMany(mappedBy = "bookAuthor")
-    private Set<Book> books;
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "bookAuthor")
+    private List<Book> books = new ArrayList<>();
 
     public Author() {
     }
@@ -29,6 +35,10 @@ public class Author {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getFullName() {
         return fullName;
     }
@@ -37,11 +47,11 @@ public class Author {
         this.fullName = fullName;
     }
 
-    public Set<Book> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(Set<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 
@@ -58,5 +68,14 @@ public class Author {
     @Override
     public int hashCode() {
         return Objects.hash(id, fullName, books);
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", books=" + books +
+                '}';
     }
 }

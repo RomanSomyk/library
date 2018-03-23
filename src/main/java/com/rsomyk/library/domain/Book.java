@@ -1,5 +1,8 @@
 package com.rsomyk.library.domain;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -22,9 +25,11 @@ public class Book {
     @NotNull
     private String genre;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "author_id"))
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinTable(name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> bookAuthor = new ArrayList<>();
 
     public Book() {
@@ -38,6 +43,10 @@ public class Book {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getBookName() {
@@ -56,7 +65,7 @@ public class Book {
         this.genre = genre;
     }
 
-    public List<Author> getBooksAutors() {
+    public List<Author> getBookAuthor() {
         return bookAuthor;
     }
 
@@ -78,5 +87,15 @@ public class Book {
     @Override
     public int hashCode() {
         return Objects.hash(id, bookName, genre, bookAuthor);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", bookName='" + bookName + '\'' +
+                ", genre='" + genre + '\'' +
+                ", bookAuthor=" + bookAuthor +
+                '}';
     }
 }
