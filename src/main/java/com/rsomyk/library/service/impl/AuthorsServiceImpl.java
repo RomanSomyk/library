@@ -9,8 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AuthorsServiceImpl implements AuthorsService {
+    private final AuthorsRepository authorsRepository;
+
     @Autowired
-    private AuthorsRepository authorsRepository;
+    public AuthorsServiceImpl(AuthorsRepository authorsRepository) {
+        this.authorsRepository = authorsRepository;
+    }
 
     @Override
     @Transactional

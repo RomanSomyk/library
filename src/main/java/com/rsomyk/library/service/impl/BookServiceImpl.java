@@ -11,8 +11,12 @@ import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
+    private final BooksRepository booksRepository;
+
     @Autowired
-    private BooksRepository booksRepository;
+    public BookServiceImpl(BooksRepository booksRepository) {
+        this.booksRepository = booksRepository;
+    }
 
     @Override
     @Transactional
