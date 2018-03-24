@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/authors")
 public class AuthorController {
@@ -15,6 +17,12 @@ public class AuthorController {
     @Autowired
     public AuthorController(AuthorsService authorsService) {
         this.authorsService = authorsService;
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Author> getAllAuthors(){
+        return authorsService.getAllAuthors();
     }
 
     @GetMapping("/{authorId}")

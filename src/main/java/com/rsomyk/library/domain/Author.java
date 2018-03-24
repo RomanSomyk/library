@@ -21,7 +21,7 @@ public class Author {
     private String fullName;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "bookAuthor")
+    @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "bookAuthor")
     private List<Book> books = new ArrayList<>();
 
     public Author() {

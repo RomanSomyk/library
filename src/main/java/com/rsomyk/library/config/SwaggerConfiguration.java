@@ -1,4 +1,5 @@
 package com.rsomyk.library.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -16,15 +17,6 @@ public class SwaggerConfiguration {
     private static final String title = "Library";
     private static final String description = "Documentation for the project";
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title(title)
-                .description(description)
-                .license(LICENSE_TEXT)
-                .version(SWAGGER_API_VERSION)
-                .build();
-    }
-
     @Bean
     public Docket decksApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -34,4 +26,14 @@ public class SwaggerConfiguration {
                 .paths(PathSelectors.any())
                 .build();
     }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title(title)
+                .description(description)
+                .license(LICENSE_TEXT)
+                .version(SWAGGER_API_VERSION)
+                .build();
+    }
+
 }

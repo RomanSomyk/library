@@ -36,7 +36,7 @@ public class BookServiceTest {
     }
 
     @Test
-    public void teatGetAllBooks() {
+    public void testGetAllBooks() {
         List<Book> result = bookService.getAllBooks();
         verify(booksRepository).findAll();
         assertEquals(bookList, result);

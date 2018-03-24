@@ -12,9 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -28,6 +28,7 @@ public class AuthorControllerTest {
     private final Integer COUNT_OF_BOOKS = 1;
     private MockMvc mockMvc;
     private Author author = new Author();
+    private List<Author> authors = new ArrayList<>();
 
     @Mock
     private AuthorsService authorsService;
@@ -38,8 +39,19 @@ public class AuthorControllerTest {
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(authorController).build();
+        when(authorsService.getAllAuthors()).thenReturn(authors);
         when(authorsService.countBooksOfAuthor(AUTHOR_ID)).thenReturn(COUNT_OF_BOOKS);
         when(authorsService.addAuthor(author)).thenReturn(author);
+    }
+
+    @Test
+    public void testGetAllAuthors() throws Exception {
+        mockMvc.perform(get("/api/authors")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json("[ ]"));
+        verify(authorsService).getAllAuthors();
     }
 
     @Test

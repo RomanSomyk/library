@@ -10,6 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,6 +22,7 @@ public class AuthorsServiceTest {
     private final Long AUTHOR_ID = 1L;
     private final Integer COUNT_OF_BOOKS = 1;
     private Author author = new Author();
+    private List<Author> authors = new ArrayList<>();
     @Mock
     private AuthorsRepository authorsRepository;
 
@@ -27,8 +31,16 @@ public class AuthorsServiceTest {
 
     @Before
     public void setUp() {
+        when(authorsRepository.findAll()).thenReturn(authors);
         when(authorsRepository.countBooksOfAuthor(AUTHOR_ID)).thenReturn(COUNT_OF_BOOKS);
         when(authorsRepository.save(author)).thenReturn(author);
+    }
+
+    @Test
+    public void testGetAllAuthors() {
+        List<Author> result = authorsRepository.findAll();
+        verify(authorsRepository).findAll();
+        assertEquals(authors, result);
     }
 
     @Test

@@ -7,13 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class AuthorsServiceImpl implements AuthorsService {
+
     private final AuthorsRepository authorsRepository;
 
     @Autowired
     public AuthorsServiceImpl(AuthorsRepository authorsRepository) {
         this.authorsRepository = authorsRepository;
+    }
+
+    @Override
+    @Transactional
+    public List<Author> getAllAuthors() {
+        return authorsRepository.findAll();
     }
 
     @Override
