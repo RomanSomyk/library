@@ -4,6 +4,7 @@ import com.rsomyk.library.domain.Book;
 import com.rsomyk.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,12 +28,14 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Book addBook(@RequestBody @Valid Book book) {
         return bookService.addBook(book);
     }
 
     @DeleteMapping("/{bookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ROLE_USER')")
     public void deleteBook(@PathVariable Long bookId) {
         bookService.deleteBook(bookId);
     }

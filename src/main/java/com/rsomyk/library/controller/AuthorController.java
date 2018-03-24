@@ -4,6 +4,7 @@ import com.rsomyk.library.domain.Author;
 import com.rsomyk.library.service.AuthorsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class AuthorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Author addAuthor(@RequestBody Author author){
         return authorsService.addAuthor(author);
     }
