@@ -67,7 +67,7 @@ public class AuthorControllerTest {
     @Test
     public void testAddAuthor() throws Exception {
         author.setFullName("string");
-        mockMvc.perform(post("/api/authors", author)
+        mockMvc.perform(post("/api/private/authors", author)
                 .content("{\"fullName\": \"string\"}")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))

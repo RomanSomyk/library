@@ -36,7 +36,7 @@ public class TokenUtils {
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", userDetails.getUsername());
         claims.put("createdAt", new Date());
-        return this.generateToken(claims);
+        return generateToken(claims);
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {

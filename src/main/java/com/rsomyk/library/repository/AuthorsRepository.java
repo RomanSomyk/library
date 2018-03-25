@@ -8,6 +8,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthorsRepository extends JpaRepository<Author, Long> {
+    /**
+     * Query to database which count books of author
+     *
+     * @param authorId authorId must not be {@literal null}.
+     * @return number of author's books
+     */
+
     @Query(nativeQuery = true, value = "select count(ba.book_id) " +
             "from book_author ba " +
             "where ba.author_id = :author_id")

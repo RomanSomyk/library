@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * The controller which accepts requests related to the books
+ */
 @RestController
 @RequestMapping("api/")
 public class BookController {
@@ -20,12 +23,23 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    /**
+     * Gets books which are in the database
+     *
+     * @return the all books which are in the database
+     */
     @GetMapping("books")
     @ResponseStatus(HttpStatus.OK)
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
+    /**
+     * Add a new book to database
+     *
+     * @param book the object which will be added
+     * @return added book
+     */
     @PostMapping("private/books")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -33,6 +47,11 @@ public class BookController {
         return bookService.addBook(book);
     }
 
+    /**
+     * Delete book with the given identifier form database
+     *
+     * @param bookId must not be {@literal null}.
+     */
     @DeleteMapping("private/books/{bookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasRole('ROLE_USER')")

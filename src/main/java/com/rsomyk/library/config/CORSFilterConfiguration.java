@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class CROSFilterConfiguration implements Filter {
+public class CORSFilterConfiguration implements Filter {
+
+    public CORSFilterConfiguration() {
+    }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {

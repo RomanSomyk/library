@@ -65,7 +65,7 @@ public class BookControllerTest {
 
     @Test
     public void testAddBook() throws Exception {
-        mockMvc.perform(post("/api/books", book)
+        mockMvc.perform(post("/api/private/books", book)
                 .content("{\n" +
                         "  \"bookName\": \"string\",\n" +
                         "  \"booksAutors\": [\n" +
@@ -85,7 +85,7 @@ public class BookControllerTest {
 
     @Test
     public void testDeleteBook() throws Exception {
-        mockMvc.perform(delete("/api/books//{bookId}", BOOK_ID)
+        mockMvc.perform(delete("/api/private/books/{bookId}", BOOK_ID)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
