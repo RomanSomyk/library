@@ -8,27 +8,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Class which will be presented in database as table
+ * named "authors".
+ */
 @Entity
 @Table(name = "authors")
 public class Author {
+
+    /**
+     * The column which contains the identifier
+     * of author. Automatically generated value.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "author_id")
     private Long id;
 
+    /**
+     * The column which contains the username
+     * of author. Must not be null.
+     */
     @Column(name = "author_name")
     @NotNull
     private String fullName;
 
+    /**
+     * The collection which contains the books of authors.
+     * Presented as a separate one table named book_author.
+     */
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "bookAuthor")
     private List<Book> books = new ArrayList<>();
 
+    /**
+     * No-argument constructor which used for creating the instantiate
+     * of the class.
+     */
     public Author() {
-    }
-
-    public Author(String fullName) {
-        this.fullName = fullName;
     }
 
     public Long getId() {

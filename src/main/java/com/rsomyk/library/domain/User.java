@@ -25,6 +25,10 @@ public class User implements UserDetails {
     @NotNull
     private String password;
 
+    /**
+     * No-argument constructor which used for creating the instantiate
+     * of the class.
+     */
     public User() {
     }
 
