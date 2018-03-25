@@ -1,10 +1,11 @@
 package com.rsomyk.library.config;
 
-import com.rsomyk.library.security.AuthenticationTokenFilter;
-import com.rsomyk.library.security.EntryPointUnauthorizedHandler;
+import com.rsomyk.library.security.authentification.AuthenticationTokenFilter;
+import com.rsomyk.library.security.authentification.EntryPointUnauthorizedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -21,7 +22,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final EntryPointUnauthorizedHandler entryPointUnauthorizedHandler;
-
     private final UserDetailsService userDetails;
 
     @Autowired
@@ -32,16 +32,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(this.userDetails);
+        authenticationManagerBuilder.userDetailsService(userDetails);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.exceptionHandling()
-                .authenticationEntryPoint(this.entryPointUnauthorizedHandler).and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers("/**").permitAll().antMatchers("/auth/*").permitAll().anyRequest().authenticated();
+                .authenticationEntryPoint(entryPointUnauthorizedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS)
+                .permitAll()
+                .antMatchers("/api/private/**")
+                .hasRole("USER")
+                .anyRequest()
+                .permitAll();
         http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 

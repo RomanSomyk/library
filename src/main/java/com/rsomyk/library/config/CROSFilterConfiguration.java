@@ -10,13 +10,8 @@ import java.io.IOException;
 @Component
 public class CROSFilterConfiguration implements Filter {
 
-
-    public CROSFilterConfiguration() {
-    }
-
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
@@ -26,7 +21,7 @@ public class CROSFilterConfiguration implements Filter {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
 
-        chain.doFilter(req, res);
+        chain.doFilter(request, response);
     }
 
     @Override

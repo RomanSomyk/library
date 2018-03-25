@@ -1,4 +1,4 @@
-package com.rsomyk.library.security;
+package com.rsomyk.library.security.util;
 
 import com.rsomyk.library.domain.User;
 import io.jsonwebtoken.Claims;
@@ -15,43 +15,21 @@ import java.util.Map;
 @Component
 public class TokenUtils {
 
-    @Value("${lgs.token.secret}")
+    @Value("${api.token.secret}")
     private String secret;
 
-    @Value("${token.expired}")
+    @Value("${api.token.expired}")
     private Long expiredTime;
 
     public String getUsernameFromToken(String token) {
         String username;
         try {
-            final Claims claims = this.getClaimsFromToken(token);
+            final Claims claims = getClaimsFromToken(token);
             username = (String) claims.get("username");
         } catch (Exception e) {
             username = null;
         }
         return username;
-    }
-
-    private Date getExpirationDate(String token) {
-        Date createdAt;
-        try {
-            final Claims claims = this.getClaimsFromToken(token);
-            createdAt = new Date((Long) claims.get("createdAt"));
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Don`t get createdAt");
-        }
-        return createdAt;
-    }
-
-
-    private Claims getClaimsFromToken(String token) {
-        Claims claims;
-        try {
-            claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
-        } catch (Exception e) {
-            claims = null;
-        }
-        return claims;
     }
 
     public String generateToken(UserDetails userDetails) {
@@ -61,21 +39,41 @@ public class TokenUtils {
         return this.generateToken(claims);
     }
 
-    private String generateToken(Map<String, Object> claims) {
-        return Jwts.builder().setClaims(claims)
-                .signWith(SignatureAlgorithm.HS512, this.secret).compact();
-    }
-
-
     public Boolean validateToken(String token, UserDetails userDetails) {
         User user = (User) userDetails;
-        final String username = this.getUsernameFromToken(token);
-        final Date createdAt = this.getExpirationDate(token);
+        final String username = getUsernameFromToken(token);
+        final Date createdAt = getExpirationDate(token);
         boolean expired = false;
         Date now = new Date();
         if ((now.getTime() - createdAt.getTime()) < expiredTime) {
             expired = true;
         }
         return (username.equals(user.getUsername()) && expired);
+    }
+
+    private String generateToken(Map<String, Object> claims) {
+        return Jwts.builder().setClaims(claims)
+                .signWith(SignatureAlgorithm.HS512, secret).compact();
+    }
+
+    private Claims getClaimsFromToken(String token) {
+        Claims claims;
+        try {
+            claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        } catch (Exception e) {
+            claims = null;
+        }
+        return claims;
+    }
+
+    private Date getExpirationDate(String token) {
+        Date createdAt;
+        try {
+            final Claims claims = getClaimsFromToken(token);
+            createdAt = new Date((Long) claims.get("createdAt"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Don`t get createdAt");
+        }
+        return createdAt;
     }
 }

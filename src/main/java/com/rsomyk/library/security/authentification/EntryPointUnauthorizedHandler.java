@@ -1,4 +1,4 @@
-package com.rsomyk.library.security;
+package com.rsomyk.library.security.authentification;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

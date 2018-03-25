@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/books")
+@RequestMapping("api/")
 public class BookController {
     private final BookService bookService;
 
@@ -20,20 +20,20 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping
+    @GetMapping("books")
     @ResponseStatus(HttpStatus.OK)
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
-    @PostMapping
+    @PostMapping("private/books")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_USER')")
     public Book addBook(@RequestBody @Valid Book book) {
         return bookService.addBook(book);
     }
 
-    @DeleteMapping("/{bookId}")
+    @DeleteMapping("private/books/{bookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasRole('ROLE_USER')")
     public void deleteBook(@PathVariable Long bookId) {

@@ -7,10 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/authors")
+@RequestMapping("api/")
 public class AuthorController {
 
     private final AuthorsService authorsService;
@@ -20,22 +21,23 @@ public class AuthorController {
         this.authorsService = authorsService;
     }
 
-    @GetMapping
+    @GetMapping("authors")
     @ResponseStatus(HttpStatus.OK)
     public List<Author> getAllAuthors(){
         return authorsService.getAllAuthors();
     }
 
-    @GetMapping("/{authorId}")
+    @GetMapping("authors/{authorId}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Integer countBooksOfAuthor(@PathVariable Long authorId){
         return authorsService.countBooksOfAuthor(authorId);
     }
 
-    @PostMapping
+    @PostMapping("private/authors")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Author addAuthor(@RequestBody Author author){
+    public Author addAuthor(@RequestBody @Valid Author author){
         return authorsService.addAuthor(author);
     }
 }

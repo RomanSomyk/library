@@ -16,8 +16,8 @@ logging:
     org.springframework: ERROR
     org.hibernate: ERROR
     springfox.documentation: ERROR
-lgs:
+api:
   token:
     secret: shhh
     header: A-Token
-token.expired: 1728000000
+    expired: 1728000000
