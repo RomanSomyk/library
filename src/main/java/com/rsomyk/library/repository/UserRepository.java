@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     /**
-     * Query which search user with the given username.
+     * Query which search user by the given username.
      *
      * @param userName must not be {@literal null}.
      * @return

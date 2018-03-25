@@ -1,9 +1,16 @@
 package com.rsomyk.library.security.DTO;
 
+/**
+ * DTO with the token of security for user which are loggingIn
+ */
 public class TokenDTO {
-
+    /**
+     * The key of the security token
+     */
     private String key;
-
+    /**
+     * The value of the security token
+     */
     private String value;
 
     public TokenDTO() {

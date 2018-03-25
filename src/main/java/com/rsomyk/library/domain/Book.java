@@ -17,7 +17,7 @@ public class Book {
 
     /**
      * The column which contains the identifier
-     * of author. Automatically generated value.
+     * of book. Automatically generated value.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

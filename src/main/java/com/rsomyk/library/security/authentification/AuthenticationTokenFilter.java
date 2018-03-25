@@ -38,16 +38,19 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response
+                                    , FilterChain chain)throws IOException, ServletException {
+
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String authToken = httpRequest.getHeader(tokenHeader);
         String username = tokenUtils.getUsernameFromToken(authToken);
         SecurityContext context = SecurityContextHolder.getContext();
+
         if (username != null && context.getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (tokenUtils.validateToken(authToken, userDetails)) {
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
                 context.setAuthentication(authentication);
             }

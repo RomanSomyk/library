@@ -26,7 +26,7 @@ public class Author {
     private Long id;
 
     /**
-     * The column which contains the username
+     * The column which contains the name
      * of author. Must not be null.
      */
     @Column(name = "author_name")

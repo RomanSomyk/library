@@ -1,8 +1,16 @@
 package com.rsomyk.library.security.DTO;
 
+/**
+ * DTO for users logIn
+ */
 public class LoginDTO {
-
+    /**
+     * Username of the user which are loggingIn
+     */
     private String username;
+    /**
+     * Password of the user which are loggingIn
+     */
     private String password;
 
     public LoginDTO() {

@@ -3,7 +3,6 @@ package com.rsomyk.library.controller;
 import com.rsomyk.library.domain.User;
 import com.rsomyk.library.security.DTO.UserNameDTO;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     /**
      * Gets the username of current user.
+     *
      * @return username
      */
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public UserNameDTO getUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) auth.getPrincipal();
+    public UserNameDTO getUser() {
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
         return new UserNameDTO(user.getUsername());
     }
 }

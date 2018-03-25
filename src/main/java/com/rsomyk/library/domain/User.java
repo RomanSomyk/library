@@ -5,22 +5,40 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * Class which will be presented in database as table
+ * named "user". Implements UserDetails for security implementation.
+ */
 @Entity
 public class User implements UserDetails {
+    /**
+     * The column which contains the identifier
+     * of user. Automatically generated value.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    /**
+     * The column which contains the username
+     * of user. Must not be null.
+     */
     @NotNull
     private String username;
-
+    /**
+     * The column which contains the user`s password.
+     * Must not be null.
+     */
     @JsonIgnore
     @NotNull
     private String password;
@@ -32,6 +50,12 @@ public class User implements UserDetails {
     public User() {
     }
 
+    /**
+     * Constructor for creating new user.
+     *
+     * @param username of the new user.
+     * @param password of the new user.
+     */
     public User(String username, String password) {
         this.username = username;
         this.password = password;

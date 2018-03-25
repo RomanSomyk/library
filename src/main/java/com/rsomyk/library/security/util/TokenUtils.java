@@ -15,6 +15,9 @@ import java.util.Map;
 @Component
 public class TokenUtils {
 
+    private static final String CLAIM_KEY_USERNAME = "username";
+    private static final String CLAIM_KEY_CREATED = "createdAt";
+
     @Value("${api.token.secret}")
     private String secret;
 
@@ -25,7 +28,7 @@ public class TokenUtils {
         String username;
         try {
             final Claims claims = getClaimsFromToken(token);
-            username = (String) claims.get("username");
+            username = (String) claims.get(CLAIM_KEY_USERNAME);
         } catch (Exception e) {
             username = null;
         }
@@ -34,8 +37,8 @@ public class TokenUtils {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("username", userDetails.getUsername());
-        claims.put("createdAt", new Date());
+        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
+        claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
     }
 
@@ -70,9 +73,9 @@ public class TokenUtils {
         Date createdAt;
         try {
             final Claims claims = getClaimsFromToken(token);
-            createdAt = new Date((Long) claims.get("createdAt"));
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Don`t get createdAt");
+            createdAt = new Date((Long) claims.get(CLAIM_KEY_CREATED));
+        } catch (NullPointerException e) {
+            createdAt = null;
         }
         return createdAt;
     }

@@ -1,7 +1,12 @@
 package com.rsomyk.library.security.DTO;
 
+/**
+ * DTO of the current session user`s username
+ */
 public class UserNameDTO {
-
+    /**
+     * Username of the current user
+     */
     private String username;
 
     public UserNameDTO() {
