@@ -55,7 +55,7 @@ public class AuthorController {
      */
     @PostMapping("private/authors")
     @ResponseStatus(HttpStatus.CREATED)
-//    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Author addAuthor(@RequestBody @Valid Author author) {
         return authorsService.addAuthor(author);
     }

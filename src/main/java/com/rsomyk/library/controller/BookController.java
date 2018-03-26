@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class BookController {
      */
     @PostMapping("private/books")
     @ResponseStatus(HttpStatus.CREATED)
-//    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Book addBook(@RequestBody @Valid Book book) {
         return bookService.addBook(book);
     }
@@ -54,8 +55,8 @@ public class BookController {
      */
     @DeleteMapping("private/books/{bookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @PreAuthorize("hasRole('ROLE_USER')")
-    public void deleteBook(@PathVariable Long bookId) {
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public void deleteBook(@PathVariable @NotNull Long bookId) {
         bookService.deleteBook(bookId);
     }
 

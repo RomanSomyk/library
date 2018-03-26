@@ -4,6 +4,7 @@ import com.rsomyk.library.domain.Book;
 import com.rsomyk.library.repository.BooksRepository;
 import com.rsomyk.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,9 +33,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public void deleteBook(Long bookId) {
-        booksRepository.delete(bookId);
+        if (bookId != null) {
+            try {
+                booksRepository.delete(bookId);
+            } catch (EmptyResultDataAccessException e) {
+                System.out.println("A book with such id does not exist");
+            }
+        }
     }
 
 }
