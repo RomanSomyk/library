@@ -33,6 +33,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
     private UserDetailsService userDetailsService;
 
     @Autowired
+    @Override
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         super.setAuthenticationManager(authenticationManager);
     }

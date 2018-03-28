@@ -1,4 +1,4 @@
-package com.rsomyk.library.security.DTO;
+package com.rsomyk.library.security.dto;
 
 /**
  * DTO with the token of security for user which are loggingIn

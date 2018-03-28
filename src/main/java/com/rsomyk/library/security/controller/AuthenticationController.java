@@ -1,7 +1,7 @@
 package com.rsomyk.library.security.controller;
 
-import com.rsomyk.library.security.DTO.LoginDTO;
-import com.rsomyk.library.security.DTO.TokenDTO;
+import com.rsomyk.library.security.dto.LoginDTO;
+import com.rsomyk.library.security.dto.TokenDTO;
 import com.rsomyk.library.security.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

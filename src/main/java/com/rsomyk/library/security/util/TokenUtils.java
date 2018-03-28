@@ -4,6 +4,8 @@ import com.rsomyk.library.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -14,7 +16,7 @@ import java.util.Map;
 
 @Component
 public class TokenUtils {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(TokenUtils.class);
     private static final String CLAIM_KEY_USERNAME = "username";
     private static final String CLAIM_KEY_CREATED = "createdAt";
 
@@ -25,14 +27,15 @@ public class TokenUtils {
     private Long expiredTime;
 
     public String getUsernameFromToken(String token) {
-        String username;
         try {
             final Claims claims = getClaimsFromToken(token);
-            username = (String) claims.get(CLAIM_KEY_USERNAME);
-        } catch (Exception e) {
-            username = null;
+            if (claims != null) {
+                return  (String) claims.get(CLAIM_KEY_USERNAME);
+            }
+        } catch (NullPointerException | ClassCastException e) {
+            LOGGER.debug("ClassCastException");
         }
-        return username;
+        return null;
     }
 
     public String generateToken(UserDetails userDetails) {
@@ -46,12 +49,13 @@ public class TokenUtils {
         User user = (User) userDetails;
         final String username = getUsernameFromToken(token);
         final Date createdAt = getExpirationDate(token);
-        boolean expired = false;
-        Date now = new Date();
-        if ((now.getTime() - createdAt.getTime()) < expiredTime) {
-            expired = true;
+
+        if (createdAt != null) {
+            boolean expired = (System.currentTimeMillis() - createdAt.getTime()) < expiredTime;
+            return (username.equals(user.getUsername()) && expired);
         }
-        return (username.equals(user.getUsername()) && expired);
+
+        return false;
     }
 
     private String generateToken(Map<String, Object> claims) {
@@ -70,13 +74,12 @@ public class TokenUtils {
     }
 
     private Date getExpirationDate(String token) {
-        Date createdAt;
-        try {
-            final Claims claims = getClaimsFromToken(token);
-            createdAt = new Date((Long) claims.get(CLAIM_KEY_CREATED));
-        } catch (NullPointerException e) {
-            createdAt = null;
+
+        final Claims claims = getClaimsFromToken(token);
+
+        if (claims != null) {
+            return (Date) claims.get(CLAIM_KEY_CREATED);
         }
-        return createdAt;
+        return null;
     }
 }

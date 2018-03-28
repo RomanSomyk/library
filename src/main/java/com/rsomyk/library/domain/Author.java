@@ -48,6 +48,11 @@ public class Author {
     public Author() {
     }
 
+    public Author(String fullName, List<Book> books) {
+        this.fullName = fullName;
+        this.books = books;
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,7 +1,7 @@
 package com.rsomyk.library.controller;
 
 import com.rsomyk.library.domain.User;
-import com.rsomyk.library.security.DTO.UserNameDTO;
+import com.rsomyk.library.security.dto.UserNameDTO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;

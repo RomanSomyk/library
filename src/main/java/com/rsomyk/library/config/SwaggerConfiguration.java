@@ -15,8 +15,8 @@ public class SwaggerConfiguration {
 
     private static final String SWAGGER_API_VERSION = "1.0";
     private static final String LICENSE_TEXT = "License";
-    private static final String title = "Library";
-    private static final String description = "Documentation for the project";
+    private static final String TITLE = "Library";
+    private static final String DESCRIPTION = "Documentation for the project";
 
     @Bean
     public Docket decksApi() {
@@ -30,8 +30,8 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title(title)
-                .description(description)
+                .title(TITLE)
+                .description(DESCRIPTION)
                 .license(LICENSE_TEXT)
                 .version(SWAGGER_API_VERSION)
                 .build();

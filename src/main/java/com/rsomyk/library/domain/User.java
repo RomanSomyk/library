@@ -63,7 +63,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<GrantedAuthority>(Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+        return new ArrayList<>(Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
     @Override
@@ -106,10 +106,6 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUserName() {
-        return username;
     }
 
     public void setUserName(String userName) {
