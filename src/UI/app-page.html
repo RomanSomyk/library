@@ -71,14 +71,6 @@
         </tr>
         </thead>
         <tbody id="books-table">
-        <!--<tr>-->
-            <!--<th scope="row">1</th>-->
-            <!--<td>Веселі вихідні</td>-->
-            <!--<td>Genre here</td>-->
-            <!--<td>Ivan Pelykh</td>-->
-
-        <!--</tr>-->
-
         </tbody>
     </table>
     <!--End ofBook table -->
@@ -95,14 +87,6 @@
                 <select class="form-control" id="authors-select-list">
 
                 </select>
-                <!--<h5>Author name</h5>-->
-                <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"-->
-                        <!--aria-haspopup="true" aria-expanded="false">-->
-                    <!--Author name <span class="caret"></span>-->
-                <!--</button>-->
-                <!--<ul class="dropdown-menu list-group" id="authors-select-list">-->
-
-                <!--</ul>-->
             </div>
             <!--End of Author name dropdownlist-->
 
@@ -126,7 +110,7 @@
 
         <!--Login button group-->
         <div class="btn-group pull-right" id="edit-book" role="group" aria-label="...">
-<!--            <h5>Add book</h5>-->
+            <!--            <h5>Add book</h5>-->
             <button onclick="add_book()" type="button" class="btn btn-primary">Add book</button>
         </div>
         <!--End of login button group-->
@@ -150,10 +134,16 @@
                     <td><input type="text" name="Genre book" id="add-book-genre" placeholder="Book Genre"></td>
                     <td>
                         <form autocomplete="off">
-                            <div class="autocomplete" style="width:300px;">
+                            <div class="autocomplete" id="authors_input" style="width:300px;">
                                 <input id="myInput" type="text" class="add-book-author-name" name="authorName" placeholder="Author">
                             </div>
                         </form>
+                        <button class="btn btn-primary" id="add_input" type=button >Add author</button>
+                    </td>
+                    <td id="existing_authors">
+                        <select name="existing_authors" id="" class="selectpicker">
+                            <option value="">Author 1 LastName</option>
+                        </select>
                     </td>
                 </tr>
                 </tbody>
@@ -243,9 +233,14 @@
 <script src="js/valid.js"></script>
 <script src="js/add_book.js"></script>
 <script src="js/author_autocomplete.js"></script>
+<script type="text/javascript">
+    $("#add_input").click(function() {
+        $("#authors_input").append('<input id="myInput" type="text" name="authorName" placeholder="Author" />');
+    });
+</script>
 </body>
 <script>
-    
+
     localStorage.getItem("test");
 
     $(function() {
@@ -332,7 +327,7 @@
             'async': false,
             'data': JSON.stringify(loginRequest),
             'success': function(data) {
-                
+
                 localStorage.setItem(data.key, data.value);
                 document.location.reload();
                 console.log(localStorage.getItem("A-Token"));

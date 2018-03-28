@@ -78,7 +78,7 @@ public class TokenUtils {
         final Claims claims = getClaimsFromToken(token);
 
         if (claims != null) {
-            return (Date) claims.get(CLAIM_KEY_CREATED);
+            return new Date((Long) claims.get(CLAIM_KEY_CREATED));
         }
         return null;
     }
