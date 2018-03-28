@@ -22,7 +22,7 @@ QUICK START
 2. Wait until IDE will import all maven dependencies to this project;
 3. Open MySQL Workbench and change the password for user **`root`** to **`123456`**;
 4. Run the project.
-5. Udd the user to database.
+5. Udd the user to database using MySQL Workbench.
 5. Open src/UI/app-page.htm in your browser.
 
 Now you can work with the API.
