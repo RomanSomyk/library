@@ -1,5 +1,6 @@
 package com.rsomyk.library.controller;
 
+import com.rsomyk.library.controller.dto.BookDTO;
 import com.rsomyk.library.domain.Book;
 import com.rsomyk.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class BookController {
     @PostMapping("private/books")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Book addBook(@RequestBody @Valid Book book) {
+    public Book addBook(@RequestBody BookDTO book) {
         return bookService.addBook(book);
     }
 

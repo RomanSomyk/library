@@ -119,13 +119,13 @@
 
         <!--Add book-->
         <div id="add_book">
-            <h3>This block is for editing books in the table </h3>
+            <h3>This block is for editing books in the table (first add a new authors before adding new book) </h3>
             <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th scope="col">Book Name</th>
                     <th scope="col">Genre</th>
-                    <th scope="col">Authors</th>
+                    <th scope="col">Authors (use Ctrl for add several authors)</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -135,15 +135,17 @@
                     <td>
                         <form autocomplete="off">
                             <div class="autocomplete" id="authors_input" style="width:300px;">
-                                <input id="myInput" type="text" class="add-book-author-name" name="authorName" placeholder="Author">
+                                <select multiple class="form-control" id="authors-select-list-add">
+                                </select>
+                                <!--<input id="myInput" type="text" class="add-book-author-name" name="authorName" placeholder="Author">-->
                             </div>
                         </form>
-                        <button class="btn btn-primary" id="add_input" type=button >Add author</button>
+
                     </td>
-                    <td id="existing_authors">
-                        <select name="existing_authors" id="" class="selectpicker">
-                            <option value="">Author 1 LastName</option>
-                        </select>
+                    <td>
+                        <input type="text" id="add_author_input" class="selectpicker" placeholder="Full author's name">
+                        </input>
+                        <button class="btn btn-primary" id="add_author_button" type=button >Add author</button>
                     </td>
                 </tr>
                 </tbody>
@@ -240,6 +242,30 @@
 </script>
 </body>
 <script>
+    $('#add_author_button').click(function() {
+        var authorname = $('#add_author_input').val();
+        var author = {
+            'fullName': authorname
+        };
+        $.ajax({
+            'url': 'http://localhost:8080/api/private/authors',
+            'type': "POST",
+            'contentType': 'application/json',
+            'dataType': 'json',
+            'async': false,
+            'data': JSON.stringify(author),
+            'headers': {
+                'A-Token': localStorage.getItem('A-Token'),
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            'success': function(data) {
+                location.reload();
+            },
+            'error': function(error) {
+                console.log(error);
+            }
+        });
+    });
 
     localStorage.getItem("test");
 
@@ -278,6 +304,7 @@
 
                 for (i = 0;i<response.length;i++) {
                     $('#authors-select-list').append("<option value='"+response[i].id+"'>"+response[i].fullName+"</option>")
+                    $('#authors-select-list-add').append("<option value='"+response[i].id+"'>"+response[i].fullName+"</option>")
                 }
             },
             'error': function(error) {
@@ -342,22 +369,11 @@
 
         var bookName = $('#add-book-name').val();
         var genre = $('#add-book-genre').val();
-        var bookAuthor = $('.add-book-author-name').val();
+        var bookAuthor = $('#authors-select-list-add').val();
 
         var newBook = {
-            'bookAuthor': [
-                {
-                    "fullName": bookAuthor,
-                    'id': 0
-                }
-            ],
             'bookName': bookName,
-            'booksAutors': [
-                {
-                    'fullName': ''+bookAuthor+'',
-                    'id': 0
-                }
-            ],
+            'bookAuthorsIds': bookAuthor,
             'genre': genre,
             'id': 0
         };

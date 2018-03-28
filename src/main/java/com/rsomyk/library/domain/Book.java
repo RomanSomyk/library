@@ -57,6 +57,11 @@ public class Book {
     public Book() {
     }
 
+    public Book(String bookName, String genre) {
+        this.bookName = bookName;
+        this.genre = genre;
+    }
+
     public Book(String bookName, String genre, List<Author> bookAuthor) {
         this.bookName = bookName;
         this.genre = genre;

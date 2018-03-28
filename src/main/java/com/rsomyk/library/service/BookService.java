@@ -1,5 +1,6 @@
 package com.rsomyk.library.service;
 
+import com.rsomyk.library.controller.dto.BookDTO;
 import com.rsomyk.library.domain.Book;
 
 import java.util.List;
@@ -14,6 +15,15 @@ public interface BookService {
      * @return the all books which are in the database
      */
     List<Book> getAllBooks();
+
+    /**
+     * Add a new book to database using DTO of the book
+     *
+     * @param book the object which will be added
+     * @return added book
+     */
+    Book addBook(BookDTO book);
+
 
     /**
      * Add a new book to database
